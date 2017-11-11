@@ -55,7 +55,7 @@ int evaluate_command(int n_commands, struct single_command (*commands)[512])
 	 if(com->argv[0][0] == '/'){
 		pid_t pid;
 		pid = fork();
-		const char *args[] = {"/bin/ls", "-l", "ls", NULL};
+		char *args[] = {"/bin/ls", "-l", "ls", NULL};
 		int r;
 
 		if(pid < 0){
@@ -65,7 +65,7 @@ int evaluate_command(int n_commands, struct single_command (*commands)[512])
 			wait(NULL);
 		}
 		else if(pid == 0){
-			execv("/bin/ls", args);
+			r = execv(ars[0], args);
 			if(r == -1)
 			{
 				perror("execv");
