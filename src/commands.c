@@ -65,7 +65,7 @@ int evaluate_command(int n_commands, struct single_command (*commands)[512])
 			wait(NULL);
 		}
 		else if(pid == 0){
-			r = execv(ars[0], args);
+			r = execv(args[0], args);
 			if(r == -1)
 			{
 				perror("execv");
