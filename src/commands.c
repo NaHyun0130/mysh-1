@@ -55,7 +55,9 @@ int evaluate_command(int n_commands, struct single_command (*commands)[512])
 	 if(com->argv[0][0] == '/'){
 		pid_t pid;
 		pid = fork();
-		
+		const char *args[] = {"/bin/ls", "-l", "ls", NULL};
+		int r;
+
 		if(pid < 0){
 			fprintf(stderr, "%s : fork faild\n", com -> argv[0]);
 		}
@@ -63,8 +65,12 @@ int evaluate_command(int n_commands, struct single_command (*commands)[512])
 			wait(NULL);
 		}
 		else if(pid == 0){
-			char *args[] = {"/bin/ls", "ls", "-l", NULL};
-			execv(args[0], args);
+			execv("/bin/ls", args);
+			if(r == -1)
+			{
+				perror("execv");
+				exit(EXIT_FAILURE);
+			}
 			exit(0);
 		}
 	}
